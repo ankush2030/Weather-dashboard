@@ -1,0 +1,162 @@
+<!-- <div *ngIf="tempMarque" style="display: flex; ">
+    <marquee style="background-color: black; color: white;" direction="right"></marquee>
+    <button (click)="tempMarque = false"> Close</button>
+</div> -->
+
+<!-- <form  style="padding-top: 2rem;">
+    <div style="position: relative;">
+    <mat-form-field subscriptSizing="dynamic">
+      <mat-label>Cities</mat-label>
+      <input type="text"
+             placeholder="Pick one"
+             aria-label="Number"
+             matInput
+             [formControl]="myControl"
+             [matAutocomplete]="auto">
+            </mat-form-field>
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" style="z-index: 1000;" >
+        @for (option of filteredOptions | async; track option) {
+          <mat-option [value]="option">{{option}}</mat-option>
+        }
+      </mat-autocomplete>
+</div>
+  </form> -->
+
+<!-- autocomplete.component.html -->
+<!-- <form>
+    <mat-form-field>
+      <mat-label> Citiess </mat-label>
+      <input
+        type="text"
+        matInput
+        [formControl]="myControl"
+        [matAutocomplete]="auto"
+      />
+    </mat-form-field>
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
+  </form> -->
+
+  <!--  -->
+
+  <!-- <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <mat-form-field appearance="outline" style="transition: width 0.3s ease-in-out; width: 250px; text-align: center;">
+      <input
+        matInput
+        placeholder="Search"
+        [(ngModel)]="searchQuery"
+        style="text-align: center; padding: 10px; font-size: 16px;"
+        
+      />
+    </mat-form-field>
+  </div> -->
+  
+  
+  
+<div style="display: flex; gap: 1rem; flex-wrap: wrap; padding-top: 2rem;">
+    <app-sidebar style="width: 5%; min-width: 50px;" [screen]="screen"></app-sidebar>
+
+
+    <!-- Central content. -->
+    <div style="padding: .5rem; display: flex; gap: .5rem; flex-wrap: wrap;" [ngStyle]="screen === 'pc'? {'width': '65%'} : {'width': 'max-width'}"> 
+        <!-- <img src="/assets/sunn1.png"> -->
+
+        <!-- <label class="text" style="font-size: small; height: 10px;">Results for {{data?.location?.name}},  {{data?.location?.region}}</label> -->
+        <!-- Basic info box. -->
+        <div [ngStyle]="{'background-image': 'url(' + bgImgPath + ')'}" style=" background-size: cover; background-position: center; background-repeat: no-repeat; width: 100%; display: flex; justify-content: space-between; padding: 1rem; height: 350px;" class="card">
+            
+            <!-- Temp. -->
+            <div style="display: flex; flex-direction: column; margin-top: 1rem; padding: 1rem; gap: .2rem; height: fit-content; width: auto; opacity: .9;" class="card">
+                <div class="text" style="font-size: large;">Now</div>
+                <div class="text" style="font-size: xx-large; font-weight: 600;">{{data?.current?.temp_c}} ºC </div>
+                <div class="text" style="font-size: small; font-weight: 100;">Feels like {{data?.current?.feelslike_c}} ºC</div>
+            </div>
+            <!-- Desc. -->
+            <div style="display: flex; flex-direction: column; align-items: flex-end; margin-top: 1rem; padding: 1rem; gap: .2rem; height: fit-content; width: auto; opacity: .9;" class="card">
+                <div></div>
+                <div class="text" style="font-size: x-large;">{{data?.current?.condition?.text}}</div>
+                <div class="text" style="font-size: medium; font-weight: 100;">Precipitation {{data?.current?.precip_mm}}mm</div>
+                <div class="text" style="font-size: medium; font-weight: 100;">Humidity {{data?.current?.humidity}} %</div>
+                <div class="text" style="font-size: medium; font-weight: 100;">Wind {{data?.current?.wind_kph}} Kph</div>
+            </div>
+        </div>
+        
+        <div class="card" style="width: 25%; display: flex; flex-direction: column; padding: 1rem; gap: .2rem; height: 60px;">
+            <div class="text" style="display: flex; font-size: medium; font-weight: 100;">
+                <div style="width: 60%;">Wind-direction:</div>  
+                <div>{{data?.current?.wind_dir}}</div>
+            </div>
+            <div class="text" style="display: flex; font-size: medium; font-weight: 100;">
+                <div style="width: 60%;">Wind-degree:</div>     
+                <div>{{data?.current?.wind_degree}} º</div>
+            </div>
+            <div class="text" style="display: flex; font-size: medium; font-weight: 100;">
+                <div style="width: 60%;">Pressure:</div>
+                <div>{{data?.current?.pressure_mb}} mBar</div>
+            </div>
+        </div>
+        <div class="card" style="width: 25%; display: flex; flex-direction: column; padding: 1rem; gap: .2rem; height: 60px;">
+            <div class="text" style="display: flex; font-size: medium; font-weight: 100;">
+                <div style="width: 60%;">UV:</div>     
+                <div>{{data?.current?.uv}}</div>
+            </div>
+            <div class="text" style="display: flex; font-size: medium; font-weight: 100;">
+                <div style="width: 60%;">Visibility:</div>  
+                <div>{{data?.current?.vis_km}} Km</div>
+            </div>
+            <div class="text" style="display: flex; font-size: medium; font-weight: 100;">
+                <div style="width: 60%;">Dew point:</div>
+                <div>{{data?.current?.dewpoint_c}} ºC</div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- Right side tabs, for summary of 7 days. -->
+    <mat-tab-group fitInkBarToContent mat-align-tabs="start" style="height: 100%;" [ngStyle]="screen === 'pc'? {'width': '25%'} : {'width': '50%', 'paddig-left': '9px'}">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <div style="padding-bottom: 5px;">3-days forecast</div>
+            </ng-template>
+
+            <div style="padding-top: 10px; display: flex; flex-direction: column; gap: 20px;">
+                @for (record of data?.forecast?.forecastday; track $index) {
+                <div style="display: flex; gap: 15px;">
+                    <div class="text" style="width: 30%;">{{record?.date}}</div>
+                    <!-- <i style="width: 10%;" [ngClass]="favouriteService.getIconClass(record.weather)"
+                        [ngStyle]="{'color': favouriteService.getWeatherColor(record.weather)}"></i> -->
+                    <div class="text" style="width: 30%;">{{record?.day?.condition?.text}}</div>
+                    <div class="text" style="width: 30%;">{{record?.day?.maxtemp_c}} / {{record?.day?.mintemp_c}} </div>
+                </div>
+                <mat-divider style="color: grey; border-top-width: 1px;"></mat-divider>
+                }
+            </div>
+        </mat-tab>
+
+        <!-- <mat-tab>
+            <ng-template mat-tab-label>
+                7 days
+            </ng-template>
+
+            <div style="padding-top: 10px; display: flex; flex-direction: column; gap: 20px;">
+                @for (record of summaryData.sevenDays; track $index) {
+                <div style="display: flex; gap: 15px;">
+                    <div class="text" style="width: 30%;">{{record.time}}</div>
+                    <i style="width: 10%;" [ngClass]="favouriteService.getIconClass(record.weather)"
+                        [ngStyle]="{'color': favouriteService.getWeatherColor(record.weather)}"></i>
+                    <div class="text" style="width: 30%;">{{record.weather}}</div>
+                    <div class="text" style="width: 30%;">{{record.maxTemp}} / {{record.minTemp}} </div>
+                </div>
+                <mat-divider style="color: grey; border-top-width: 1px;"></mat-divider>
+                }
+            </div>
+        </mat-tab> -->
+    </mat-tab-group>
+
+
+</div>
